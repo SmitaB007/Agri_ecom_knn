@@ -1,0 +1,305 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<head>
+    <style>
+        .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            min-height: 80vh;
+            padding: 20px;
+            gap:10px;
+        }
+
+        .form-container {
+            width: 100%;
+            max-width: 500px;
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin-right: 10px; 
+        }
+
+        .form-container h2 {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+            background: linear-gradient(to right, #4caf50, #81c784);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background: linear-gradient(to right, #388e3c, #66bb6a);
+        }
+
+        .error-text {
+            color: red;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        .form-image {
+            max-width: 400px;
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+ 
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .form-container {
+                margin-right: 0;
+                margin-bottom: 20px;
+                width: 90%; 
+            }
+
+            .form-image {
+                max-width: 90%;
+            }
+        }
+    </style>
+</head>
+<div class="container">
+    <!-- Form Section -->
+    <div class="form-container">
+        <h2>Contact Us</h2>
+        <form method="POST" action="{% url 'contact_us' %}">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                <div class="error-text">{{ field.errors|join:" " }}</div>
+                {% endif %}
+            </div>
+            {% endfor %}
+            <button type="submit" class="btn">Send Message</button>
+        </form>
+    </div>
+
+    <!-- Image Section -->
+    <img src="{% static 'css/contact_bg.png' %}" alt="Contact Us Illustration" class="form-image">
+</div>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% comment %} {% extends "base.html" %}
+{% load static %}
+{% block content %}
+<head>
+    
+    <style>
+        /* Center the form container */
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh;
+            padding: 20px;
+        }
+
+        /* Style the form container */
+        .form-container {
+            width: 100%;
+            max-width: 500px;
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        /* Add space around the header */
+        .form-container h2 {
+            margin-bottom: 20px;
+        }
+
+        /* Bold labels with spacing */
+        .form-group label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        /* Add spacing between label and input */
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        /* Stylish button */
+        .btn {
+            width: 100%;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+            background: linear-gradient(to right, #4caf50, #81c784);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background: linear-gradient(to right, #388e3c, #66bb6a);
+        }
+
+        /* Style textareas */
+        textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+            resize: vertical;
+        }
+
+        /* Adjust inputs */
+        input, select, textarea {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .error-text {
+            color: red;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<div class="container">
+    <div class="form-container">
+        <h2>Contact Us</h2>
+        <form method="POST" action="{% url 'contact_us' %}">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                <div class="error-text">{{ field.errors|join:" " }}</div>
+                {% endif %}
+            </div>
+            {% endfor %}
+            <button type="submit" class="btn">Send Message</button>
+        </form>
+    </div>
+</div>
+{% endblock %} {% endcomment %}
+
+
+
+
+
+
+
+
+
+
+
+
+{% comment %} {% extends "base.html" %}
+{% load static %}
+  {% block content %}
+        <!-- Responsive navbar-->
+       <head>
+        <link rel="stylesheet" href={% static "css/contact.css" %}>
+       </head>
+        <!-- Page Content-->
+        <div class="container ">
+            <!-- Heading Row-->
+           <form method="POST" action="{% url "contact_us" %}">
+            {% for field in form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                    <div class="error-text">{{ field.errors|join:" " }}</div>
+                {% endif %}
+            </div>
+        {% endfor %}
+            <button type="submit" class="btn btn-secondary">Send message</button>
+          
+           </form>
+            <!-- Content Row-->
+            
+        </div>
+       
+ {% endblock %} {% endcomment %}

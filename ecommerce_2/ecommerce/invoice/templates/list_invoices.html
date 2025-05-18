@@ -1,0 +1,79 @@
+{% block content %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f9f9f9;
+    }
+    .container {
+        width: 80%;
+        margin: 50px auto;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+    }
+    h1 {
+        text-align: center;
+        color: #333;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+    th, td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+    th {
+        background-color: #f4f4f4;
+    }
+    tr:hover {
+        background-color: #f1f1f1;
+    }
+    .download-button {
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        padding: 8px 12px;
+        text-align: center;
+        text-decoration: none;
+        font-size: 14px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    .download-button:hover {
+        background-color: #45a049;
+    }
+
+    .download-button a{
+        color:white;
+        text-decoration:none;
+    }
+</style>
+<div class="container">
+    <h1>Invoice List</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Username</th>
+                <th>Invoice</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for x in invoices %}
+            <tr>
+                <td>{{x.id}}</td>
+                <td>{{x.user.username}}</td>
+                <td><button class="download-button"> <a href="{% url 'invoice_view' x.id %}">Download Invoice</a></button></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock  %}

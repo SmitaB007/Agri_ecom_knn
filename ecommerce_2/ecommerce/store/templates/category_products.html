@@ -1,0 +1,181 @@
+
+
+{% extends "base.html" %}
+{% block content %}
+<style>
+
+.container {
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 15px;
+}
+
+h2 {
+    color: #333;
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.card {
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px); 
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); 
+}
+
+.card-body {
+    padding: 20px;
+    text-align: center;
+}
+
+.card-title {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #007bff;
+}
+
+.card-text {
+    font-size: 0.9rem;
+    color: #6c757d;
+    margin-bottom: 15px;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 12px;
+    font-size: 0.9rem;
+    text-decoration: none;
+    color: #ffffff;
+    transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.co{
+    height:135px;
+}
+    
+</style>
+
+<div class="container">
+    <div class="row">
+        {% for x in prod %}
+        <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    {% if x.is_sale %}
+                    <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right:0.5 rem">Sale</div>
+                    
+                    {% endif %}
+                    <h5 class="card-title">{{ x.name }}</h5>
+                    <p class="card-text">In: <strong>{{ x.category }}</strong></p>
+                    <a href=" {% url "view_product" x.id%} " class="btn btn-primary">More Info</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<div class="co">
+</div>
+{% endblock %}
+
+
+
+{% comment %} {% extends "base.html" %}
+{% block content %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+    }
+
+    .products-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 20px;
+    }
+
+    .product-card {
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        text-align: center;
+        transition: transform 0.3s ease;
+    }
+
+    .product-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .product-card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+
+    .product-card h3 {
+        font-size: 18px;
+        color: #333;
+        margin: 15px 0 10px;
+    }
+
+    .product-card p {
+        font-size: 16px;
+        color: #555;
+        margin-bottom: 15px;
+    }
+
+    .product-card .price {
+        font-size: 18px;
+        font-weight: bold;
+        color: #009900;
+        margin-bottom: 20px;
+    }
+
+    .product-card .buy-now {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #009900;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+        margin-bottom: 20px;
+    }
+
+    .product-card .buy-now:hover {
+        background-color: #03c03c;
+    }
+
+</style>
+<div class="products-container">
+    {% for p in prod %}
+    <div class="product-card">
+        <img src="{{ p.image.url }}" alt="Product Image">
+        <h3>{{p.name}}</h3>
+      
+        <p class="price">Rs.{{p.price}}</p>
+        <a href="{% url "view_product" p.id %}" class="buy-now">View moew</a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %} {% endcomment %}

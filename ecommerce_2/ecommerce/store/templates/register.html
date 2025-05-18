@@ -1,0 +1,227 @@
+
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(to bottom, #f0f8f1, #e8f5e9);
+    color: #333;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: black;
+    text-align: center;
+}
+
+.register-container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+    background: #ffffff;
+}
+
+.register-header {
+    text-align: center;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.register-header h1 {
+    font-size: 2rem;
+    color: #4b8c4d;
+    font-weight: bold;
+}
+
+.form-card {
+    background-color: #f9fafb;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.form-card h2 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color: #28a745;
+}
+
+.form-card .form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.form-card .form-group label {
+    display: block;
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 5px;
+}
+
+.form-card .form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    background-color: #fff;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.form-card .form-group input:focus {
+    border-color: #28a745;
+    outline: none;
+    box-shadow: 0 0 5px rgba(40, 167, 69, 0.5);
+}
+
+.register-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #28a745;
+    color: #fff;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-bottom: 15px;
+    transition: background-color 0.3s ease;
+}
+
+.register-btn:hover {
+    background-color: #218838;
+}
+
+.google-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #ea4335;
+    color: #fff;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.google-btn:hover {
+    background-color: #d93025;
+}
+
+.google-btn img {
+    width: 20px;
+    height: 20px;
+}
+
+.register-container {
+    margin: 110px auto;
+}
+
+.register-container {
+    padding: 15px;
+}
+
+.register-header h1 {
+    font-size: 1.6rem;
+}
+
+.back-button {
+    top: 0px;
+}
+
+.form-card {
+    padding: 30px;
+}
+
+.form-card h2 {
+    font-size: 1.5rem;
+}
+
+.form-group input {
+    font-size: 0.9rem;
+}
+
+.register-btn,
+.google-btn {
+    padding: 10px;
+    font-size: 1rem;
+}
+
+@media (max-width: 480px) {
+    .register-header h1 {
+        font-size: 2rem;
+    }
+
+    .register-btn,
+    .google-btn {
+        font-size: 0.9rem;
+    }
+
+    .form-card h2 {
+        font-size: 1.4rem;
+    }
+
+    .form-group input {
+        font-size: 0.8rem;
+    }
+
+    .google-btn img {
+        width: 18px;
+        height: 18px;
+    }
+}
+</style>
+<div class="register-container">
+ <header class="register-header">
+ 
+    
+    <h1>Join Our Farming Community</h1>
+ </header>
+ <div class="form-card">
+    <h2>Register Now</h2>
+    <form action="{% url "register_user" %}" method="POST">
+        {% csrf_token %}
+      <div class="form-group">
+        {{ form.username.label_tag }}
+        {{ form.username }}
+    </div>
+    <div class="form-group">
+        {{ form.first_name.label_tag }}
+        {{ form.first_name }}
+    </div>
+    <div class="form-group">
+        {{ form.last_name.label_tag }}
+        {{ form.last_name }}
+    </div>
+    <div class="form-group">
+        {{ form.email.label_tag }}
+        {{ form.email }}
+    </div>
+    <div class="form-group">
+        {{ form.password1.label_tag }}
+        {{ form.password1 }}
+    </div>
+    <div class="form-group">
+        {{ form.password2.label_tag }}
+        {{ form.password2 }}
+    </div>
+        <button type="submit" class="register-btn">Register</button>
+       
+    </form>
+ </div>
+</div> 
+
+{% endblock  %}
+
+
+ 

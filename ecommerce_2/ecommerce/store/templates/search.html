@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container px-4 px-lg-5">
+    <!-- Heading Row-->
+    <div class="row gx-4 gx-lg-5 align-items-center my-5">
+ 
+        <div class="col-lg-5">
+            <h1 class="font-weight-light"></h1>
+           
+            {% if prods %}
+            {% for x in prods  %}
+            <div class="card">
+                <h5 class="card-header"></h5>
+                <div class="card-body">
+                  <h5 class="card-title">{{ x.name }}</h5>
+                  <p class="card-text">{{ x.description }}</p>
+                  <a href={% url "view_product" x.id %} class="btn btn-primary">Take a look</a>
+                </div>
+              </div>
+            {% endfor %}
+            {% else %}
+            <h3>product is not available</h3>
+            {% endif %}
+            
+           
+        </div>
+   
+    </div>
+    
+
+{% endblock %}

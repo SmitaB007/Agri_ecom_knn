@@ -1,0 +1,222 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+    <style>
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f4f8;
+   
+
+}
+
+.container {
+margin-top:5px;
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 100%;
+    max-width: 900px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.title {
+    font-size: 2.2rem;
+    margin-bottom: 20px;
+    color: #333;
+    font-weight: 700;
+}
+
+.qr-code {
+    margin: 30px 0;
+    background-color: #fff;
+    height: 300px;
+    width: 300px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.qr-code img {
+    height: 100%;
+    width: 100%;
+    border-radius: 10px;
+}
+
+.total-amount {
+    font-size: 1.6rem;
+    margin: 20px 0;
+    color: #333;
+    font-weight: 600;
+}
+
+.link {
+    font-size: 1.2rem;
+    color: #28a745;
+    text-decoration: none;
+    margin-top: 25px;
+    display: inline-block;
+    font-weight: 600;
+    padding: 10px 15px;
+    border-radius: 5px;
+    background-color: #f1f1f1;
+}
+
+.link:hover {
+    text-decoration: underline;
+    background-color: #e6f7e6;
+}
+
+.payment-info {
+    margin: 25px 0;
+    font-size: 1.1rem;
+    color: #555;
+}
+
+.timeb {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    margin: 25px 0;
+background-color: white; 
+    border: 1px solid #ddd; 
+    border-radius: 12px; 
+    padding: 10px;
+}
+
+.timeb p {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    margin: 0;
+    padding: 0 15px;
+    display: inline-block;
+}
+
+.regenerate-btn {
+    display: none;
+    padding: 12px 25px;
+    font-size: 1.2rem;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 25px;
+    transition: background-color 0.3s;
+}
+
+.regenerate-btn:hover {
+    background-color: #218838;
+}
+
+@media (max-width: 600px) {
+    .container {
+	width:90%;
+        padding: 20px;
+    }
+
+    .title {
+        font-size: 1.8rem;
+    }
+
+    .total-amount {
+        font-size: 1.3rem;
+    }
+
+    .timeb p {
+        font-size: 1.4rem;
+    }
+
+    .link {
+        font-size: 1rem;
+        padding: 8px 12px;
+    }
+
+    .regenerate-btn {
+        font-size: 1rem;
+        padding: 10px 20px;
+    }
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <p class="title">Pay here!!</p>
+
+        <h1 class="total-amount">Pay ₹{{ amount }} using Google Pay</h1>
+        <div class="qr-code">
+            <img src={% url "generate_qr" amount %} alt="SCan to Pay" id="qr-img">
+        </div>
+        <div class="timeb">
+<p>Time:</p><p id="time">2:00</p>
+</div>
+<br>
+ <button id="regenerateBtn" class="regenerate-btn" onclick="regenerateQR()">Regenerate QR</button>
+<br>
+      
+
+        <a href="{% url 'order_process' method %}" class="link">Paid</a>
+    </div>
+
+    <script>
+        var timeInSeconds = 120; 
+        var timerElement = document.getElementById('time');
+        var qrImg = document.getElementById('qr-img');
+        var regenerateBtn = document.getElementById('regenerateBtn');
+        var timer;
+
+        function updateTimer() {
+            var minutes = Math.floor(timeInSeconds / 60);
+            var seconds = timeInSeconds % 60;
+            if (seconds < 10) {
+                seconds = "0" + seconds;
+            }
+
+            timerElement.textContent = minutes + ":" + seconds;
+
+            if (timeInSeconds > 0) {
+                timeInSeconds--;
+            } else {
+                clearInterval(timer); 
+                qrImg.style.display = "none";  
+                regenerateBtn.style.display = "block";  
+            }
+        }
+
+        function regenerateQR() {
+            qrImg.style.display = "block";  
+            regenerateBtn.style.display = "none";  
+            timeInSeconds = 120; 
+            timerElement.textContent = "2:00";  
+            timer = setInterval(updateTimer, 1000); 
+        }
+
+        timer = setInterval(updateTimer, 1000);
+    </script>
+{% endblock  %}
+
+{% comment %} {% block content %}
+
+<h1>Pay ₹{{ amount }} using Google Pay</h1>
+<img src={% url "generate_qr" amount %} alt="Scan to Pay">
+<h1>Payment Processing</h1>
+<p>Your payment is being processed. Please wait for a few moments and click the button below to verify your payment status.</p>
+
+<a href="{% url "order_process" method %}">Paid</a>
+
+  
+  
+
+{% endblock  %} {% endcomment %}

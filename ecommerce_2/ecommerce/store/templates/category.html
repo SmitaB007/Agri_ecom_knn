@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block content %}
+  <style>
+   
+  .container {
+      max-width: 1200px;
+      margin: 50px auto;
+      padding: 15px;
+  }
+  
+  h2 {
+      color: #333;
+      font-size: 2rem;
+      font-weight: bold;
+      margin-bottom: 20px;
+  }
+  
+  .row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px; 
+      justify-content: center;
+  }
+  
+  .card {
+      background: #ffffff;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      padding: 20px;
+      transition: transform 0.3s, box-shadow 0.3s;
+  }
+  
+  .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); 
+  }
+  
+  .category-link {
+      color: #007bff;
+      font-size: 1.2rem;
+      font-weight: bold;
+      text-decoration: none;
+      transition: color 0.3s;
+  }
+  
+  .category-link:hover {
+      color: #0056b3; 
+  }
+  
+  .mb-3 {
+      margin-bottom: 1rem !important;
+  }
+  
+  </style>
+   
+  <div class="container">
+  <center>  <h2 class="text-center mb-4">Categories</h2></center>
+    <div class="row">
+        {% for c in cat  %}
+        <div class="col-md-4 col-sm-6 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <a href="{% url  "cat_products" c.name %}" class="category-link">{{ c.name }}</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+  </div>
+ {% endblock %}
+
+ 

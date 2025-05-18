@@ -1,0 +1,320 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: white;
+        }
+
+        .container {
+            background-color: white;
+            display: flex;
+            align-items: center; 
+            padding: 15px;
+            position: relative;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .order-title {
+            font-size: 2rem;
+            color: #333;
+            text-align: center;
+            width: 100%;
+            margin: 0; 
+        }
+
+        .main-content {
+            display: flex;
+            height: calc(100vh - 65px);
+        }
+
+        .sidebar {
+            width: 300px;
+            background-color: #fff;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+            overflow-y: auto;
+            z-index: 1000;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .sidebar ul li a {
+            display: block;
+            padding: 15px;
+            font-size: 1rem;
+            color: #333;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .sidebar ul li a:hover {
+            background-color: #f9f9f9;
+        }
+
+        .iframe-container {
+            flex-grow: 1;
+            background-color: #fff;
+            border-left: 1px solid #f0f0f0;
+        }
+
+        .iframe-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                box-shadow: none;
+                border-bottom: 2px solid #f0f0f0;
+            }
+
+            .iframe-container {
+                flex-grow: 1;
+                border-left: none;
+                border-top: 2px solid #f0f0f0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <p class="order-title">Order Details</p>
+    </div>
+
+    <div class="main-content">
+        <div class="sidebar" id="sidebar">
+            <ul>
+                <li><a href="{% url "shipped_products" %}" data-target="{% url "shipped_products" %}">Shipped Orders</a></li>
+                <li><a href="{% url "not_shipped_products" %}" data-target="{% url "not_shipped_products" %}">Unshipped Orders</a></li>
+                <li><a href="{% url "list_invoices" %}" data-target="{% url "list_invoices" %}">Invoices</a></li>
+            </ul>
+        </div>
+
+        <div class="iframe-container" id="iframeContainer">
+            <iframe id="iframeContent"></iframe>
+        </div>
+    </div>
+
+    <script>
+        const links = document.querySelectorAll('.sidebar ul li a');
+        const iframeContent = document.getElementById('iframeContent');
+
+        links.forEach(link => {
+            link.addEventListener('click', (event) => {
+                event.preventDefault();
+                const targetPage = link.getAttribute('data-target');
+                iframeContent.src = targetPage;
+            });
+        });
+    </script>
+</body>
+</html>
+
+{% endblock content %}
+
+
+{% comment %} {% extends "base.html" %}
+{% block content %}
+
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color:#f0f0f0;
+        }
+
+        .container {
+            background-color: white;
+            display: flex;
+            align-items: center; 
+            padding: 15px;
+            position: relative;
+ border-bottom: 2px solid #f0f0f0;
+        }
+
+        .order-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background-color: #009900;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            margin-right: 10px;
+        }
+
+        .order-button:hover {
+            background-color: #03c03c;
+        }
+
+        .order-title {
+            font-size: 2rem;
+            color: #333;
+            position: absolute;
+            left: 50%; 
+            transform: translateX(-50%); 
+            margin: 0; 
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100%;
+            background-color: #fff;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+            overflow-y: auto;
+            transition: left 0.3s ease;
+            z-index: 1000;
+        }
+
+        .sidebar.active {
+            left: 0;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .sidebar ul li a {
+            display: block;
+            padding: 15px;
+            font-size: 1rem;
+            color: #333;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .sidebar ul li a:hover {
+            background-color: #f9f9f9;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #333;
+        }
+
+        .iframe-container {
+            display: none;
+            position: fixed;
+            top: 110px;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #fff;
+            z-index: 999;
+        }
+
+        .iframe-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+</head>
+
+    <div class="container">
+        <button class="order-button" id="openSidebar">
+            <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3 12h18M3 6h18M3 18h18" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </button>
+        <p class="order-title">Order Details</p>
+    </div>
+
+    <div class="sidebar" id="sidebar">
+        <span class="close-btn" id="closeSidebar">&times;</span>
+<br>
+<br>
+        <ul>
+            <li><a href="{% url "shipped_products" %}"  data-target="{% url "shipped_products" %}" >Shipped Orders</a></li>
+            <li><a href="{% url "not_shipped_products" %}" data-target="{% url "not_shipped_products" %}">Unshipped Orders</a></li>
+            <li><a href="{% url "list_invoices" %}" data-target="{% url "list_invoices" %}">Invoices</a></li>
+        </ul>
+    </div>
+
+    <div class="iframe-container" id="iframeContainer">
+        <iframe id="iframeContent"></iframe>
+    </div>
+
+    <script>
+        const openSidebar = document.getElementById('openSidebar');
+        const closeSidebar = document.getElementById('closeSidebar');
+        const sidebar = document.getElementById('sidebar');
+        const iframeContainer = document.getElementById('iframeContainer');
+        const iframeContent = document.getElementById('iframeContent');
+        const links = document.querySelectorAll('.sidebar ul li a');
+
+        openSidebar.addEventListener('click', () => {
+            sidebar.classList.add('active');
+        });
+
+        closeSidebar.addEventListener('click', () => {
+            sidebar.classList.remove('active');
+        });
+
+        links.forEach(link => {
+            link.addEventListener('click', (event) => {
+                event.preventDefault();
+                const targetPage = link.getAttribute('data-target') || link.getAttribute('href');
+                iframeContent.src = targetPage;
+                iframeContainer.style.display = 'block';
+            });
+        });
+  
+       
+    
+            iframeContent.onload = function() {
+                // Access iframe content
+                const iframeContent_1 = iframe.contentWindow.document;
+                
+                // Get the content's dimensions
+                const contentHeight = iframeContent_1.documentElement.scrollHeight;
+                const contentWidth = iframeContent_1.documentElement.scrollWidth;
+    
+                // Adjust iframe dimensions
+                iframe.style.height = contentHeight + "px";
+                iframe.style.width = contentWidth + "px";
+            }
+    </script>
+
+
+{% endblock  %} {% endcomment %}

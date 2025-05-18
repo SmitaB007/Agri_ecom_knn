@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+    body {
+        margin: 0;
+        font-family: 'Roboto', sans-serif;
+        background-color: #f8f9fa;
+        color: #333;
+    }
+
+    .wishlist-container {
+        max-width: 800px;
+        margin: 3rem auto;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 2rem;
+    }
+
+    .wishlist-header {
+        text-align: center;
+        color: #4caf50;
+        margin-bottom: 2rem;
+    }
+
+    .wishlist-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid #ddd;
+        padding: 1rem 0;
+    }
+
+    .wishlist-item:last-child {
+        border-bottom: none;
+    }
+
+    .item-details {
+        flex: 2;
+    }
+
+    .item-details h4 {
+        margin: 0;
+        font-size: 1.2rem;
+        color: #333;
+    }
+    .item-actions a{
+    text-decoration : None;
+    color : white;
+    }
+    .item-details p {
+        margin: 0.5rem 0;
+        font-size: 0.9rem;
+        color: #555;
+    }
+
+    .item-actions {
+        display: flex;
+        gap: 1rem;
+    }
+
+    .btn {
+        padding: 0.5rem 1rem;
+        border: none;
+        border-radius: 4px;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-primary {
+        background-color: #4caf50;
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background-color: #388e3c;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    .btn-danger:hover {
+        background-color: #c82333;
+    }
+
+    .empty-message {
+        text-align: center;
+        font-size: 1.2rem;
+        color: #777;
+        margin: 2rem 0;
+    }
+</style>
+<div class="wishlist-container">
+    <h2 class="wishlist-header">My Wishlist</h2>
+
+    {% if wish %}
+        {% for w in wish %}
+        <div class="wishlist-item">
+            <div class="item-details">
+                <h4>{{ w.product.name }}</h4>
+                <p>{{ w.product.description }}</p>
+                {% if w.product.is_sale %}
+                <p><strong>Price:</strong>  <strike>Rs.{{ w.product.price }}</strike>Rs.{{w.product.sale_price}}</p>
+               {% else %}
+             <p><strong>Price:</strong> Rs. {{ w.product.price }}</p>
+             {% endif %}
+            </div>
+            <div class="item-actions">
+                <button class="btn btn-primary" ><a href={% url "view_product" w.product.id  %}>View product</a></button>
+                <form action="{% url "remove_from_wishlist"%}" method="post">
+                    {% csrf_token %}
+                <button class="btn btn-danger" name="product" value={{w.product.id}} >Remove</button>
+                </form>
+            </div>
+           
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="empty-message">Your wishlist is empty!</div>
+    {% endif %}
+</div>
+
+<script>
+
+</script>
+{% endblock %}

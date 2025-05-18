@@ -1,0 +1,551 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+    .container {
+        max-width: 100%;
+        margin: 0 auto;
+        background: #f7f7f7; 
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 2rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0;  
+        align-items: flex-start;
+    }
+    
+    .product-image {
+        flex: 1 1 40%;
+        text-align: center;
+        padding: 0px;
+        overflow: hidden; 
+        border-radius: 8px;
+        width: 300px; 
+        height: 400px;
+        background-color : white;
+    }
+    
+    .product-image img {
+        
+        width: 400px;
+        height: 400px;
+        object-fit: cover; 
+        border-radius: 8px;
+    }
+    
+    .product-details {
+        flex: 1 1 60%;
+        padding-left: 2rem;
+    }
+    
+    .product-details h2 {
+        font-size: 1.8rem;
+        color: #4caf50;
+        margin-bottom: 1rem;
+    }
+    
+    .product-details p {
+        font-size: 1rem;
+        margin: 0.5rem 0;
+    }
+    
+    .price {
+        font-size: 1.5rem;
+        color: #f57c00;
+        margin: 1rem 0;
+    }
+    
+    .quantity {
+        margin: 1rem 0;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .quantity label {
+        font-size: 1rem;
+    }
+    
+    .quantity select {
+        padding: 0.5rem;
+        font-size: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+    
+    .buttons {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1.5rem;
+    }
+    
+    .buttons button {
+        padding: 0.8rem 1.5rem;
+        border: none;
+        border-radius: 4px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    
+    .buttons .add-to-cart {
+        background-color: #4caf50;
+        color: white;
+    }
+    
+    .buttons .add-to-cart:hover {
+        background-color: #388e3c;
+    }
+    
+    .buttons .add-to-wishlist {
+        background-color: #f57c00;
+        color: white;
+    }
+    
+    .buttons .add-to-wishlist:hover {
+        background-color: #e64a19;
+    }
+    
+    /* Reviews Section */
+    .reviews-section {
+        margin-top: 2rem;
+        padding: 2rem;
+        background-color: #f7f7f7;  
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        width: 100%;
+    }
+    
+    .reviews-section h3 {
+        font-size: 2rem;
+        color: #4caf50;
+        font-weight: bold;
+        margin-bottom: 1.5rem;
+        text-align: center;
+    }
+    
+    .reviews-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    
+    .review-item {
+        background-color: #fff;
+        padding: 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .review-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+    
+    .review-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+    }
+    
+    .review-author {
+        font-weight: bold;
+        font-size: 1.2rem;
+        color: #333;
+        text-transform: capitalize;
+    }
+    
+    .review-rating {
+        font-size: 1.5rem;
+        color: #ff9800;
+    }
+    
+    .star {
+        color: #ff9800;
+        font-size: 1.4rem;
+    }
+    
+    .review-text {
+        font-size: 1rem;
+        color: #555;
+        line-height: 1.6;
+        margin-top: 0.5rem;
+    }
+    
+    .no-reviews {
+        font-size: 1.2rem;
+        color: #888;
+        text-align: center;
+        padding: 2rem;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    .review-item .review-text {
+        padding: 0 1rem;
+    }
+    
+    /* Review form container */
+    .review-form-container {
+        margin-top: 2rem;
+        background-color: #fff;
+        padding: 2rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    .review-form-container p {
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+    }
+    
+    .review-form-container .form-group {
+        margin-bottom: 1.5rem;
+    }
+    
+    .review-form-container label {
+        font-size: 1rem;
+        color: #333;
+        margin-bottom: 0.5rem;
+        display: block;
+    }
+    
+    .review-form-container textarea,
+    .review-form-container select {
+        width: 100%;
+        padding: 0.8rem;
+        font-size: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+    
+    .review-form-container button {
+        padding: 0.8rem 1.5rem;
+        border: none;
+        border-radius: 4px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        background-color: #4caf50;
+        color: white;
+    }
+    
+    .review-form-container button:hover {
+        background-color: #388e3c;
+    }
+    
+    /* Mobile Responsiveness */
+    @media (max-width: 480px) {
+        .product-image img {
+            max-width: 100%;
+            height: auto;
+        }
+    
+        .product-details {
+            flex: 1 1 100%;
+        }
+    
+        .buttons {
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+    
+        .product-image {
+            flex: 1 1 100%;
+            padding: 0;
+        }
+    }
+    
+    .review-form-container {
+        margin-top: 2rem;
+        background-color: #fff;
+        padding: 2rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 600px; 
+        margin-left: auto;
+        margin-right: auto; 
+    }
+    
+    .review-form-container p {
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+        color: #4caf50;
+        text-align: center; 
+    }
+    
+    .review-form-container .form-group {
+        margin-bottom: 1.5rem;
+    }
+    
+    .review-form-container label {
+        font-size: 1rem;
+        color: #333;
+        margin-bottom: 0.5rem;
+        display: block;
+    }
+    
+    .review-form-container textarea,
+    .review-form-container select {
+        width: 100%;
+        padding: 0.8rem;
+        font-size: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+    
+    .review-form-container textarea {
+        height: 120px; 
+        resize: vertical; 
+    }
+    
+    .review-form-container button {
+        padding: 0.8rem 1.5rem;
+        border: none;
+        border-radius: 4px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        background-color: #4caf50;
+        color: white;
+        display: block;
+        width: 100%; 
+        margin-top: 1rem;
+    }
+    
+    .review-form-container button:hover {
+        background-color: #388e3c;
+    }
+    
+    @media (max-width: 480px) {
+        .review-form-container {
+            padding: 1rem;
+        }
+    
+        .review-form-container textarea {
+            height: 100px; 
+        }
+    
+        .review-form-container button {
+            width: 100%;
+        }
+    }
+
+    .sold-out-message {
+    background-color: #fff;
+    margin-top: 2rem;
+    border-radius: 8px;
+    padding: 2rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.sold-out-message .product-image {
+    width: 350px;
+    height: 350px;
+    overflow: hidden;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sold-out-message .product-image img {
+    width: 350px;
+    height: 350px;
+    object-fit: cover;
+    border-radius: 8px;
+    filter: grayscale(100%);
+}
+
+.sold-out-message .product-details {
+    flex: 1;
+    padding-left: 2rem;
+}
+
+.sold-out-message .message-box {
+    background-color: #f7f7f7;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    text-align: center;
+}
+
+.sold-out-message .message-box h2 {
+    color: #d32f2f;
+    margin-bottom: 1rem;
+}
+
+.sold-out-message .message-box p {
+    font-size: 1.2rem;
+    color: #555;
+}
+
+
+    
+</style>
+
+<div class="container">
+    {% if product.in_stock %}
+    
+    <div class="container sold-out-message">
+
+        <!-- Image on the left -->
+        <div class="product-image">
+          <img src="{{ product.image.url }}" alt="{{ product.name }}">
+        </div>
+      
+        <!-- Message on the right -->
+        <div class="product-details d-flex justify-content-center align-items-center">
+          <div class="message-box">
+            <h2 class="text-danger">Product is Sold Out</h2>
+            <p class="lead text-muted">Please visit again later 🛒</p>
+          </div>
+        </div>
+      
+      </div>
+      
+      
+{% else %}    
+  <div class="product-image">
+      <img src="{{product.image.url}}" alt="{{product.name}}">
+  </div>
+  <div class="product-details">
+      <h2>{{product.name}}</h2>
+      <p>Category: {{product.category}}</p>
+      <p>{{product.description}}</p>
+      {% if product.is_sale %}
+      <p class="price">Price:   <strike>Rs. {{product.price}}</strike>Rs.{{product.sale_price}}</p>
+     {% else %}
+      <p class="price">Price: Rs. {{product.price}}</p>
+      {% endif %}
+      {% if user.is_authenticated %}
+      <div class="quantity">
+          <label for="quantity">Quantity:</label>
+          <select id="qty-cart" name="quantity">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+          </select>
+      </div>
+      <div class="buttons">
+          <button class="add-to-cart" id="add-cart" value={{product.id}}>Add to Cart</button>
+          <form action={% url "add_to_wishlist" %} method="post" >
+            {% csrf_token %}
+          <button class="add-to-wishlist" name="product" value={{product.id}}>Add to Wishlist</button>
+          </form>
+      </div>
+      {% endif %}
+  </div>
+</div>
+
+{% if prods %}
+<div class="reviews-section">
+    <h3>Customer Reviews</h3>
+    <div class="reviews-list">
+        {% for p in prods %}
+        <div class="review-item">
+            <div class="review-header">
+                <div class="review-author">{{p.user.username}}</div>
+                <div class="review-rating">
+                    {% comment %} {% for i in range p.rating %}
+                        <span class="star">&#9733;</span>
+                    {% endfor %} {% endcomment %}
+                </div>
+            </div>
+            <p class="review-text">{{p.review}}</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% else %}
+<div class="container no-reviews">
+    <p>No reviews yet. Be the first to leave a review!</p>
+</div>
+{% endif %}
+
+{% if user.is_authenticated %}
+<div class="review-form-container">
+  <p>Leave a review</p>
+  <form action="{% url "view_product" product.id %}" method="post">
+    {% csrf_token %}
+
+    <div class="form-group">
+      <label for="id_review">Review:</label>
+      {{ form.review }}
+    </div>
+
+    <div class="form-group">
+      <label for="id_rating">Rating (1-5):</label>
+      {{ form.rating }}
+    </div>
+
+    <button type="submit">Submit Review</button>
+  </form>
+</div>
+{% endif %}
+{% endif %}
+
+<script>
+  $(document).on('click','#add-cart',function(e){
+    e.preventDefault();
+    $.ajax({
+      type : 'POST',
+      url : '{% url 'cart_add' %}',
+      data : {
+        product_id : $('#add-cart').val(),
+        product_qty : $('#qty-cart option:selected').text(),
+        csrfmiddlewaretoken : '{{ csrf_token }}',
+        action : 'post'
+      },
+      success : function(json){
+        document.getElementById("cart_quantity").textContent = json.quantity
+      },
+      error : function(xhr,errmsg,err){
+
+      }
+    });
+  })
+</script>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

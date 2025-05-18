@@ -1,0 +1,373 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+}
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 20px auto;
+}
+
+.cart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 10px;
+}
+
+.cart-header h1 {
+    font-size: 24px;
+    color: #333;
+}
+
+.cart-items {
+    margin-top: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.cart-item:last-child {
+    border-bottom: none;
+}
+
+.item-details {
+    display: flex;
+    align-items: center;
+}
+
+.item-image {
+    width: 80px;
+    height: 80px;
+    margin-right: 15px;
+}
+
+.item-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.item-info {
+    max-width: 300px;
+}
+
+.item-info h3 {
+    margin: 0 0 5px;
+    font-size: 18px;
+    color: #333;
+}
+
+.item-info p {
+    margin: 0;
+    font-size: 14px;
+    color: #666;
+}
+
+.item-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.item-buttons button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.item-buttons .update-btn {
+    background: #007bff;
+    color: #fff;
+}
+
+.item-buttons .update-btn:hover {
+    background: #0056b3;
+}
+
+.item-buttons .remove-btn {
+    background: #ff5c5c;
+    color: #fff;
+}
+
+.item-buttons .remove-btn:hover {
+    background: #e04747;
+}
+
+.cart-footer {
+    margin-top: 20px;
+    padding: 15px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.cart-footer .total {
+    font-size: 18px;
+    color: #333;
+}
+
+.cart-footer .checkout-btn {
+    padding: 10px 20px;
+    background: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.cart-footer .checkout-btn:hover {
+    background: #218838;
+}
+
+.btn-container button a{
+    padding: 10px 20px;
+    background: #218838;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer
+}
+
+.temp{
+    height :150px;
+}
+
+</style>
+<div class="container">
+    <div class="cart-header">
+        <h1>Checkout</h1>
+        <a href={% url "cart_summary" %} style="text-decoration: none; color: #218838;">Cancel</a>
+    </div>
+    <p>ORDER SUMMARY</p>
+    <div class="cart-items">
+        {% for p in cart_products %}
+        <div class="cart-item">
+            <div class="item-details">
+                <div class="item-info">
+                    <h3>{{p.name}}</h3>
+                    <p>Category: {{p.category}}</p>
+                  
+                </div>
+            </div>
+            <div class="item-quantity">
+                {% for k,v in cart_qty.items %}
+                {% if k == p.id|slugify %}
+                Quantity: {{v}}
+                {% endif %}
+                {% endfor %}
+            
+            </div>
+            {% if p.is_sale %}
+            <div class="item-price"><strike>Rs.{{p.price}}</strike>Rs.{{p.sale_price}}</div>
+            <br>
+           
+
+            {% else %}
+            <div class="item-price">Rs.{{p.price}}</div>
+     
+           
+            {% endif %}
+        </div>
+        {% endfor %}
+
+    </div>
+
+    <div class="cart-footer">
+      
+
+        <div class="total">Tax: Rs.{{tax}}</div>
+        <div class="total">Delivery Charge: Rs.{{delivery}}</div>
+        <div class="total">Total: Rs.{{amount}}</div>
+
+    </div>
+<br>
+   <div class="btn-container">
+    <button> <a href="{% url 'cart_summary' %}" class="btn btn-secondary">Update Items</a></button>
+    <button> <a href="{% url 'billing' %}" class="btn btn-success">Continue to Billing</a></button>
+   </div>
+    
+
+<div class="temp">
+</div>
+{% endblock  %}
+
+
+
+
+
+{% comment  %}
+{% block content %}
+<style>
+  /* General Body Styling */
+body {
+    background: linear-gradient(to bottom right, #f8f9fa, #e9ecef);
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333333;
+}
+
+/* Container */
+.container {
+    max-width: 900px;
+    margin: 50px auto;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+/* Header */
+.review-header {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333333;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+/* Table Styling */
+.table {
+    width: 100%;
+    margin-bottom: 20px;
+    border-collapse: collapse;
+}
+
+.table-bordered {
+    border: 1px solid #dee2e6;
+}
+
+.table th,
+.table td {
+    text-align: center;
+    padding: 15px;
+    vertical-align: middle;
+}
+
+.table th {
+    font-size: 1rem;
+    font-weight: bold;
+    background-color: #f8f9fa;
+    color: #333333;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #f8f9fa;
+}
+
+/* Total and Buttons */
+.total-amount {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333333;
+    margin-bottom: 20px;
+}
+
+.btn {
+    padding: 10px 20px;
+    border-radius: 30px;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: #ffffff;
+    border: none;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+.btn-success {
+    background: linear-gradient(to right, #28a745, #218838);
+    color: #ffffff;
+    border: none;
+}
+
+.btn-success:hover {
+    background: linear-gradient(to right, #218838, #1c7430);
+    transform: scale(1.05);
+}
+
+</style>
+<div class="container">
+  <!-- Header Section -->
+  <div class="text-center mb-4">
+      <h2 class="review-header">Review Your Cart</h2>
+      <p class="text-muted">Check your items before proceeding to billing.</p>
+  </div>
+
+  <!-- Order Summary Table -->
+  <table class="table table-bordered table-striped">
+      <thead class="table-light">
+          <tr>
+              <th>Item</th>
+              <th>Quantity</th>
+              <th>Price</th>
+             
+          </tr>
+      </thead>
+      <tbody>
+          {% for p in cart_products %}
+          <tr>
+              <td>{{ p.name }}</td>
+              <td> {% for k,v in cart_qty.items %}
+                {% if k == p.id|slugify %}
+                {{v}}
+                {% endif %}
+                {% endfor %}
+                </td>
+                {% if p.is_sale %}
+                <td>Rs.{{ p.price }}</td>
+                {% else %}
+                <td>Rs.{{ p.price }}</td>
+
+                {% endif %}
+              
+          </tr>
+          {% endfor %}
+      </tbody>
+  </table>
+
+  <!-- Total and Navigation -->
+  <div class="text-right mt-4">
+      <h4 class="total-amount">Total: Rs.{{ amount }}</h4>
+      <div class="d-flex justify-content-between mt-3">
+        
+      </div>
+  </div>
+</div>
+
+
+{% endblock  %}
+{% endcomment %}

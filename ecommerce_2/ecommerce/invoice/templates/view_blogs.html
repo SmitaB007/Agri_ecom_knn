@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+  .co{
+    height: 135px;
+  }
+  body{
+    height:100%;
+  }
+
+  .blog-list-container {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 1rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+  }
+
+  .blog-card {
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .blog-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  .blog-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+  }
+
+  .blog-card-content {
+      padding: 1rem;
+  }
+
+  .blog-card-content h2 {
+      font-size: 1.5rem;
+      color: #4caf50;
+      margin-bottom: 0.5rem;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+  }
+
+  .blog-card-content p {
+      font-size: 1rem;
+      color: #555;
+      margin: 0;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+  }
+ 
+  .blog-card-content .author {
+      font-size: 0.9rem;
+      color: #888;
+      margin-top: 0.5rem;
+  }
+  .write-blog-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #4caf50;
+    color: white;
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    text-decoration: none;
+}
+
+.write-blog-button:hover {
+    background-color: #388e3c;
+    transform: translateY(-3px);
+}
+
+.no-blogs-message {
+    text-align: center;
+    color: #888;
+    font-size: 1.5rem;
+    margin: 5rem 0;
+}
+
+
+  @media (max-width: 768px) {
+      .blog-card img {
+          height: 150px;
+      }
+
+      .blog-card-content h2 {
+          font-size: 1.3rem;
+      }
+  }
+</style>
+
+<div class="container">
+  {% comment %} <h1 style="text-align: center; color: Black; margin-bottom: 2rem;text-style : Bold">Blog List</h1> {% endcomment %}
+  <div class="blog-list-container">
+    {% if blogs %}
+    {% for blog in blogs %}
+    <div class="blog-card">
+      <img src="{{ blog.img.url }}" alt="{{ blog.title }}">
+      <div class="blog-card-content">
+        <h2>
+          <a href="{% url "detailed_blog" blog.id %}" style="text-decoration: none; color: #4caf50;">
+            {{ blog.title }}
+          </a>
+        </h2>
+        <p class="author">By {{ blog.user.username }}</p>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% if request.user.is_authenticated %}
+  <a href="{% url 'create_blog' %}" class="write-blog-button">Write a Blog</a>
+  {% endif %}
+</div>
+{% else %}
+<div class="con">
+<h2 class="no-blogs-message">No blogs available. Be the first to write one!</h2>
+
+</div>
+
+{% endif %}
+<div class="co">
+
+
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,477 @@
+
+
+
+{% extends "base.html" %}
+
+ {% block content %}
+ <style>
+  .chat-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    color: white;
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 50%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.chat-button svg{
+  height:50px;
+  width: 50px;
+}
+.chat-button:hover {
+    transform: translateY(-3px);
+}
+
+.chat-container {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    width: 350px;
+    max-height: 500px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    display: none; 
+    flex-direction: column;
+    justify-content: space-between;
+    z-index: 1000;
+}
+
+.chat-box {
+    max-height: 400px;
+    overflow-y: auto;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+}
+
+.chat-box .user-message,
+.chat-box .bot-message {
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    border-radius: 8px;
+}
+
+.chat-box .user-message {
+    background-color: #d1e7fd;
+}
+
+.chat-box .bot-message {
+    background-color: #e9ecef;
+}
+
+.chat-input {
+    width: 100%;
+    padding: 0.8rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.send-btn {
+    background-color: #4caf50;
+    color: white;
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 1rem;
+}
+
+.send-btn:hover {
+    background-color: #388e3c;
+}
+.customer-stories {
+  max-width: 1200px;
+  margin: 50px auto;
+  padding: 20px;
+  text-align: center;
+}
+.customer-stories h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+.stories-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+.story {
+  background-color: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  width: 300px;
+  padding: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.story:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+.story img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-bottom: 15px;
+}
+.story h3 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  color: #555;
+}
+.story p {
+  font-size: 0.9rem;
+  color: #666;
+  line-height: 1.6;
+}
+
+
+.product-image img{
+  width : 200px;
+  height : 200px;
+  margin-bottom : 5px;
+}
+.customer-reviews {
+  padding: 60px 20px;
+  background-color: #f9f9f9;
+  text-align: center;
+}
+
+.reviews-heading {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 40px;
+  color: #333;
+}
+
+.review-carousel {
+  display: flex;
+  gap: 17px;
+  overflow-x: scroll;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  padding: 20px;
+}
+
+.review-card {
+  flex: 0 0 calc(31.6% - 20px);
+  scroll-snap-align: center;
+  background: #fff;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.review-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.review-text {
+  font-size: 1rem;
+  margin-bottom: 20px;
+  line-height: 1.6;
+  color: #555;
+}
+
+.reviewer-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.reviewer-image {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 2px solid #4A90E2;
+}
+
+.reviewer-details h4 {
+  font-size: 1.2rem;
+  margin: 0;
+  font-weight: bold;
+  color: #333;
+}
+.review-carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.review-carousel {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+footer {
+  text-align: center;
+  padding: 20px 0;
+  background-color: white;
+  margin-top: 50px;
+  box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+}
+
+footer p {
+  font-size: 14px;
+  color: #666;
+}
+.main-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.slider {
+  position: relative;
+  width: 800px;
+  max-width: 60%;
+  height: 450px;
+  overflow: hidden;
+  margin: auto;
+}
+.slides {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.slide {
+  min-width: 100%;
+  height: 400px;
+}
+
+.shop-now-btn a{
+  text-decoration : none;
+  color : black;
+}
+
+.slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.prev,
+.next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0, 0, 0, 0.5);
+      color: white;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      z-index: 10;
+    }
+
+.prev {
+  left: 10px;
+}
+
+.next {
+  right: 10px;
+}
+@media (max-width: 768px) {
+  .main-container {
+    display: block;
+    padding: 20px;
+    margin-top:10px;
+}
+.slider {
+  width: 800px;
+  max-width: 94%;
+  height: 259px;
+}
+.banner-text {
+width: 100%;
+}
+.banner-text h1{
+font-size:2.5rem;
+}
+.banner-text .shop-now-btn {
+width:45%;
+}
+.arrow.right{
+left:86%;
+}
+.reviews-heading {
+font-size: 1.5rem;
+}
+.carousel .card {
+  flex: 0 0 80%; 
+}
+
+ </style>
+ 
+ <div class="content">
+  <div class="main-container">
+    <div class="slider">
+      <div class="slides">
+        <div class="slide">
+          <img src="https://wallpapercave.com/wp/wp1886331.jpg" alt="Slide 1">
+        </div>
+        <div class="slide">
+          <img src="https://rural.struttandparker.com/wp-content/uploads/2019/11/farming.jpeg" alt="Slide 2">
+        </div>
+        <div class="slide">
+          <img
+            src="https://thebreakthrough.imgix.net/_1200x630_crop_center-center_82_none/big-not-broken-cover-photo.jpg?mtime=1575677308"
+            alt="Slide 3">
+        </div>
+      </div>
+      <button class="prev" onclick="prevSlide()">&#10094;</button>
+      <button class="next" onclick="nextSlide()">&#10095;</button>
+    </div>
+      <div class="banner-text">
+        <h1>Get your farm ready for the season</h1>
+        <p>Shop our best sellers and new arrivals</p>
+    <button class="shop-now-btn">    <a href={% url "about" %} align="center">Know us</a></button>
+      </div>
+    </div>
+    <section class="best-sellers">
+        <h2 class="best-selling-heading">Our Products</h2>
+  
+        <div class="carousel-container">
+      <button class="arrow left" onclick="moveCarousel(-1)">&lt;</button>
+
+          <div class="carousel" id="carousel">
+            {% for x in prod  %}
+            <div class="card">
+              <div class="card-content">
+                <div class="product-image"><img src={{ x.image.url }} alt="{{ x.name }}"></div>
+                <div class="product-title">{{ x.name }}</div>
+                <div class="product-price">Rs.{{ x.price }}</div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+      <button class="arrow right" onclick="moveCarousel(1)">&gt;</button>
+        
+
+        </div>
+     </section>
+     <section class="customer-reviews">
+      <h2 class="reviews-heading">Hear from Our Customers</h2>
+      <div class="review-carousel">
+        {% for r in reviews %}
+        <div class="review-card">
+          <p class="review-text">
+            {{r.review}}
+          </p>
+          <div class="reviewer-info">
+            <img src="https://www.pngmart.com/files/23/Profile-PNG-Photo.png" alt="Reviewer 1" class="reviewer-image">
+            <div class="reviewer-details">
+              <h4>{{r.user.username}}</h4>
+            
+            </div>
+          </div>
+         
+        </div>
+        {% endfor %}
+      </div>
+    
+  
+           
+      
+   
+    <button class="chat-button" id="chatButton"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="100" height="100" fill="none">
+      <rect x="8" y="24" width="112" height="72" rx="36" fill="#4A90E2" />
+      <rect x="16" y="32" width="96" height="56" rx="28" fill="#fff" />
+      <circle cx="44" cy="60" r="8" fill="#4A90E2" />
+      <circle cx="84" cy="60" r="8" fill="#4A90E2" />
+      <path d="M44 76c8 6 16 6 24 0" stroke="#4A90E2" stroke-width="4" stroke-linecap="round" />
+      <line x1="64" y1="8" x2="64" y2="24" stroke="#4A90E2" stroke-width="4" />
+      <circle cx="64" cy="8" r="6" fill="#4A90E2" />
+      <path d="M16 104c0 4 4 8 8 8h56c4 0 8-4 8-8v-8H16v8z" fill="#4A90E2" />
+    </svg></button>
+    <div class="chat-container" id="chatContainer">
+      <div class="chat-box" id="chatBox">
+        <div class="bot-message">Welcome to Sai-Krupa Agrotech! How can I assist you today?</div>
+          {% if user_ques %}
+          <div class="user-message">{{ user_ques }}</div>
+          {% endif %}
+          {% if bot_answer %}
+          <div class="bot-message">{{ bot_answer }}</div>
+          {% endif %}
+      </div>
+      <form method="post" action="{% url "home" %}">
+        {% csrf_token %}
+        <input type="text" name="question" class="chat-input" placeholder="Ask a question about the product..." required>
+        <button type="submit" class="send-btn">Send</button>
+    </form>
+</div>
+
+<script>
+  document.getElementById('chatButton').addEventListener('click', function() {
+    const chatContainer = document.getElementById('chatContainer');
+    if (chatContainer.style.display === 'none' || chatContainer.style.display === '') {
+      chatContainer.style.display = 'flex';  
+    } else {
+      chatContainer.style.display = 'none';  
+    }
+  });
+
+  const hamburger = document.getElementById("hamburger");
+    const navMenu = document.getElementById("nav-menu");
+
+    hamburger.addEventListener("click", () => {
+      navMenu.classList.toggle("show");
+    });
+
+
+
+    const slides = document.querySelector('.slides');
+    const images = document.querySelectorAll('.slides img');
+
+    let index = 0;
+    const totalSlides = images.length;
+
+    function showSlide(idx) {
+      slides.style.transform = `translateX(-${idx * 100}%)`;
+      slides.style.transition = "transform 0.5s ease"; // Smooth transition
+    }
+
+    function prevSlide() {
+      index = (index > 0) ? index - 1 : totalSlides - 1;
+      showSlide(index);
+    }
+
+    function nextSlide() {
+      index = (index < totalSlides - 1) ? index + 1 : 0;
+      showSlide(index);
+    }
+
+    setInterval(nextSlide, 5000); // Automatically transition every 5 seconds
+
+    let currentIndex = 0;
+    const visibleCards = 3;
+    const carousel = document.getElementById('carousel');
+    const totalCards = document.querySelectorAll('.card').length;
+
+    function moveCarousel(direction) {
+      currentIndex += direction;
+
+      if (currentIndex < 0) {
+        currentIndex = 0;
+      } else if (currentIndex > totalCards - visibleCards) {
+        currentIndex = totalCards - visibleCards;
+      }
+
+      const offset = currentIndex * -100 / visibleCards;
+      carousel.style.transform = `translateX(${offset}%)`;
+    }
+
+</script>
+ {% endblock  %}

@@ -1,0 +1,141 @@
+
+  {% block content %}
+  <style>
+  body {
+      background: linear-gradient(to bottom right, #f8f9fa, #e9ecef);
+      font-family: 'Poppins', sans-serif;
+      color: #333333;
+      margin: 0;
+      padding: 0;
+  }
+  
+  .container {
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 20px;
+  }
+  
+  .shipped-header {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #333333;
+      margin-bottom: 10px;
+  }
+  
+  .shipped-header + p {
+      font-size: 1.1rem;
+      color: #6c757d;
+  }
+  
+  .card {
+      border: none;
+      border-radius: 10px;
+      overflow: hidden;
+      background: #ffffff;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card-body {
+      padding: 25px;
+  }
+  
+  .card-body h4 {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 15px;
+  }
+  
+  .card-body p {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #333333;
+  }
+  
+  .text-primary {
+      color: #007bff;
+  }
+  
+  .text-muted {
+      color: #6c757d;
+  }
+  .shipped-btn {
+    background-color: #007bff;
+    color: #ffffff;
+    font-size: 1.1rem;
+    font-weight: bold;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+
+.anc{
+    text-decoration :None;
+    color : white;
+}
+
+.shipped-btn:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+.shipped-btn:active {
+    background-color: #004494;
+    transform: scale(0.98);
+}
+   </style>
+  <div class="container">
+    <!-- Header -->
+    <div class="text-center mb-4">
+        <h2 class="shipped-header">Shipped Product Details</h2>
+    </div>
+  
+    <!-- Shipped Product Card -->
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <!-- Product Details -->
+            <h4 class="text-primary mb-3">Order Information</h4>
+            <p><strong>Email:</strong> {{orders.email}}</p>
+            <p><strong>Date Ordered:</strong> {{orders.date_ordered}}</p>
+            <p><strong>Date Shipped:</strong> {% if orders.is_shipped %}
+                {{ orders.date_shipped }}
+                {% else %}
+                Pending
+                {% endif %}</p>
+  
+            <!-- Shipping Address -->
+            <h4 class="text-primary mt-4 mb-3">Shipping Address</h4>
+            <p><strong>Full Name:</strong>{{orders.full_name}}</p>
+            <p><strong>Address:</strong> {{ orders.Shipping_address }}   </p>
+            <p><strong>Items:</strong>
+            <br>    
+            {% for i in products  %}
+              {{i.product}} - {{i.quantity}}
+              <br>
+              {% endfor %}</p>
+              {% if not orders.is_shipped %}
+              <div class="text-center mt-4">
+              <button class="shipped-btn"><a href="{% url "order_shipped" orders.id %} " class="anc">Order Shipped</a></button>
+          </div>
+          {% endif %}
+          <br>
+          {% if not orders.is_paid %}
+          <div class="text-center mt-4">
+            <button class="shipped-btn"><a href="{% url "order_paid" orders.id %} " class="anc">Payment received</a></button>
+        </div>
+        {% endif %}
+            </div>
+       
+    </div>
+  
+  </div>
+       
+
+
+       
+ {% endblock %}
+
+
+ 

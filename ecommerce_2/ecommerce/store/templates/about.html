@@ -1,0 +1,191 @@
+{% extends "base.html" %}
+  {% block content %}
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9fff2;
+            color: #333;
+        }
+
+        .about-section {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .about-header {
+            font-size: 48px;
+            color: #2e7d32;
+            margin-bottom: 20px;
+        }
+
+        .about-description {
+            font-size: 18px;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        .features-section {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .feature-card {
+            background: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            width: 30%;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .feature-card img {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 15px;
+            object-fit: cover;
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-card h3 {
+            font-size: 22px;
+            color: #2e7d32;
+            margin-bottom: 10px;
+        }
+
+        .feature-card p {
+            font-size: 16px;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .images-section {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+
+        .images-header {
+            font-size: 36px;
+            color: #2e7d32;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .image-gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .image-gallery img {
+            width: 300px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .image-gallery img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        @media screen and (max-width: 768px) {
+            header {
+                padding: 15px;
+            }
+
+            .logo {
+                font-size: 20px;
+                margin-bottom: 10px;
+            }
+
+            .features-section {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .feature-card {
+                width: 80%;
+                margin-bottom: 20px;
+            }
+
+            .images-gallery img {
+                width: 100%;
+                height: auto;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .about-header {
+                font-size: 36px;
+            }
+
+            .about-description {
+                font-size: 16px;
+            }
+
+            .feature-card {
+                width: 100%;
+                margin-bottom: 20px;
+            }
+        }
+    </style>  
+  <div class="about-section">
+    <h1 class="about-header">About Us</h1>
+    <p class="about-description">
+       
+        Welcome to Sai-Krupa Agrotech, your trusted online destination for high-quality agricultural products. Our mission is to empower farmers with the best tools, seeds, fertilizers, and equipment to enhance productivity and sustainability in farming.
+
+        At the heart of our venture is Prasad Kumbhar, a passionate agricultural professional with a B.Sc. in Agriculture. With in-depth knowledge of modern farming techniques, crop management, and soil health, he ensures that every product we offer is carefully selected to meet the needs of farmers and agribusinesses.
+        
+    </p>
+    <p class="about-description">
+        We believe in making agriculture more efficient, accessible, and profitable. That’s why we provide top-notch agricultural inputs at competitive prices, delivered right to your doorstep. Whether you're a small-scale farmer or a large agribusiness, we are here to support you with innovative solutions for a better harvest.
+
+        Sai-Krupa Agrotech – Cultivating Growth, Harvesting Success!
+    </p>
+
+    <div class="features-section">
+        <div class="feature-card">
+            <img src="https://cdn-icons-png.flaticon.com/128/11470/11470288.png" alt="Feature 1">
+            <h3>Easy Farming Access</h3>
+            <p>
+                We believe in making farming easier and more accessible to everyone. Our easy-to-navigate platform
+                allows you to browse and order from the comfort of your home, and with fast delivery options, your
+                products will be right at your doorstep in no time.
+            </p>
+        </div>
+        <div class="feature-card">
+            <img src="https://cdn-icons-png.flaticon.com/128/2775/2775912.png" alt="Feature 2">
+            <h3>Sustainable Farming Growth</h3>
+            <p>
+                At Farming we're committed to supporting sustainable agriculture and promoting growth. Join our
+                community of passionate farmers and take your farming journey to new heights with the best products
+                at competitive prices.
+            </p>
+        </div>
+    </div>
+</div> 
+       
+ {% endblock %}

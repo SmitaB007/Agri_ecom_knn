@@ -1,0 +1,261 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+
+    body{
+        background-color: #f9f9f9;
+        margin: 0;
+        padding: 0;
+        
+    }
+   
+    .page-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+       margin-top:10px;
+    } 
+    
+    .form-container {
+        background-color: #fff;
+        padding: 20px 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 400px;
+       
+    }
+
+    .form-container h2 {
+        margin-bottom: 20px;
+        font-size: 24px;
+        color: #333;
+    }
+
+    .form-container p {
+        margin: 0;
+        font-size: 14px;
+        color: #555;
+    }
+
+    .form-container input {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0 20px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 14px;
+        color: #333;
+        outline: none;
+        transition: border-color 0.3s;
+    }
+
+    .form-container input:focus {
+        border-color: #28a745;
+    }
+
+    .form-container button{
+        width: 100%;
+        padding: 10px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    .form-container a{
+        width: 100%;
+        padding: 10px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .form-container button:hover {
+        background-color: #218838;
+    }
+
+@media screen and (max-width: 768px) {
+.form-container{
+width:80%;
+}
+}
+</style>
+<div class="page-wrapper">
+<div class="form-container">
+    <h2>Shipping Details</h2>
+    <form method="POST" class="shipping-form" action={% url 'billing_process' %}>
+        {% csrf_token %}
+        <p> {{ shippingform.shipping_fullname.label_tag }}</p>
+        {{ shippingform.shipping_fullname }}
+        
+
+        <p>{{ shippingform.shipping_Address1.label_tag }}</p>
+        {{ shippingform.shipping_Address1 }}
+
+        <p>{{ shippingform.shipping_email.label_tag }}</p>
+        {{ shippingform.shipping_email }}
+
+        <p> {{ shippingform.shipping_zipcode.label_tag }}</p>
+        {{ shippingform.shipping_zipcode }}
+
+        <p> {{ shippingform.shipping_state.label_tag }}</p>
+        {{ shippingform.shipping_state }}
+
+        <a href="{% url 'update_info' %}" class="btn btn-secondary me-2">Update Shipping Address</a>
+        <br><br>
+        <button type="submit">Move to next step</button>
+    </form>
+</div>
+</div>
+{% endblock  %}
+
+{% comment  %}
+{% block content %}
+<style>
+    /* General Styling */
+body {
+    background: linear-gradient(to bottom right, #f9f9f9, #eaeaea);
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333333;
+}
+
+/* Container */
+.container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+/* Header Styling */
+.form-header {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #333333;
+    margin-bottom: 10px;
+}
+
+.form-header + p {
+    font-size: 1.1rem;
+    color: #6c757d;
+}
+
+/* Form Styling */
+.shipping-form {
+    padding: 15px 0;
+}
+
+.shipping-form .form-control {
+    font-size: 1rem;
+    padding: 10px 15px;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    box-shadow: none;
+    transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.shipping-form .form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    outline: none;
+}
+
+.shipping-form label {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #333333;
+    margin-bottom: 5px;
+    display: inline-block;
+}
+
+/* Buttons */
+.btn {
+    padding: 10px 20px;
+    border-radius: 30px;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: #ffffff;
+    border: none;
+    margin-right: 10px;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+.btn-primary {
+    background: linear-gradient(to right, #007bff, #0056b3);
+    color: #ffffff;
+    border: none;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(to right, #0056b3, #004085);
+    transform: scale(1.05);
+}
+
+</style>
+<div class="container">
+    <!-- Header Section -->
+    <div class="text-center mb-4">
+        <h2 class="form-header">Shipping Address</h2>
+        <p class="text-muted">Check your shipping details to proceed.</p>
+    </div>
+
+    <!-- Form Section -->
+    <form method="POST" class="shipping-form" action={% url 'billing_process' %}>
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                {{ shippingform.shipping_fullname.label_tag }}
+                {{ shippingform.shipping_fullname }}
+            </div>
+            <div class="col-md-6 mb-3">
+                {{ shippingform.shipping_Address1.label_tag }}
+                {{ shippingform.shipping_Address1 }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                {{ shippingform.shipping_email.label_tag }}
+                {{ shippingform.shipping_email }}
+            </div>
+            <div class="col-md-6 mb-3">
+                {{ shippingform.shipping_zipcode.label_tag }}
+                {{ shippingform.shipping_zipcode }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                {{ shippingform.shipping_state.label_tag }}
+                {{ shippingform.shipping_state }}
+            </div>
+        </div>
+        <div class="text-right">
+            <a href="{% url 'update_info' %}" class="btn btn-secondary me-2">Update Shipping Address</a>
+            <button type="submit" class="btn btn-primary">Move to Next Step</button>
+        </div>
+    </form>
+</div>
+
+
+
+{% endblock  %}
+{% endcomment %}

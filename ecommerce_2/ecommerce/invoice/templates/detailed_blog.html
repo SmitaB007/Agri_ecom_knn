@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+{% block content %}
+
+   <style>
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+}
+
+.blog-post {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+
+.post-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.blog-post h2 {
+    font-size: 2rem;
+    margin-top: 20px;
+    color: #333;
+}
+
+.meta {
+    font-size: 1rem;
+    color: #777;
+    margin-top: 10px;
+}
+
+.meta .date {
+    font-weight: bold;
+}
+
+.meta .author {
+    font-weight: bold;
+    color: #4caf50;
+}
+
+.content {
+    margin-top: 20px;
+    font-size: 1.1rem;
+    color: #555;
+}
+
+@media (max-width: 768px) {
+    .blog-post {
+        padding: 20px;
+    }
+
+    .blog-post h2 {
+        font-size: 1.8rem;
+    }
+
+    .content {
+        font-size: 1rem;
+    }
+
+    footer {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 2rem;
+    }
+
+    .blog-post h2 {
+        font-size: 1.5rem;
+    }
+
+    .content {
+        font-size: 1rem;
+    }
+
+    footer {
+        font-size: 0.8rem;
+    }
+}
+
+   </style>
+</head>
+<body>
+
+  
+
+    <main class="container">
+        <article class="blog-post">
+            <div class="post-image">
+                <img src="{{ bl.img.url }}"   alt="Blog Image">
+            </div>
+            <h2>{{ bl.title }}</h2>
+            <p class="meta">
+                Posted on <span class="date">{{ bl.created_at }} </span> by <span class="author">{{ bl.user.username }}</span>
+            </p>
+            <div class="content">
+                <p>{{ bl.content }}</p>
+            </div>
+        </article>
+    </main>
+
+ 
+
+
+{% endblock  %}
