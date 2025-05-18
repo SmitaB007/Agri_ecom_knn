@@ -124,22 +124,20 @@ STATICFILES_DIRS = ['static/']
 MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 
-genai_api_key='AIzaSyA01c7-yZIe-CKbYF79txjvFFc4nE7y35A'
-# genai_api_key = 'AIzaSyDv49jHEeaabGexbU1PETAVVvd5aYrCOLY'
-# genai_api_key = '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'
+genai_api_key='add your own key'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 X_FRAME_OPTIONS = 'SAMEORIGIN'
-STRIPE_SECRET_KEY = 'sk_test_51QkdpUBTLWmoqZ5Nyu4cqOsxuwWU3hF9ai4EJJjNYw6qCkzfZN7yZu76w6jO6ib0dte3HF2u41Jx2ptxO3lBsh5a00Yf61CwFZ'
-STRIPE_WEBHOOK_SECRET ='c_d61490a0d01cd4604ed3ad62f729af282cc6addafce80d7b6e44164d7f3f126b' 
+
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'smitabhoine2007@gmail.com'
-EMAIL_HOST_PASSWORD = 'vqgw ezka edgf pidl'
+EMAIL_HOST_USER = 'your email'
+EMAIL_HOST_PASSWORD = 'your password'
 
 
